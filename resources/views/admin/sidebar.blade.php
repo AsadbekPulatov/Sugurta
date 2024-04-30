@@ -39,6 +39,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('services.index') }}"
+                       class="nav-link @if(request()->routeIs('services.index')) active @endif ">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p>Sug'urtalar</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('user_services.index') }}"
+                       class="nav-link @if(request()->routeIs('user_services.index')) active @endif ">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p>Sug'urta tuzish</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <a href="{{ route('logout') }}"

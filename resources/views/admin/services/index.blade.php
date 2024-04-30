@@ -1,17 +1,16 @@
 @extends('admin.master')
-{{--@section('title', 'Фермерлар')--}}
 @section('content')
         <div class="row">
             <div class="col">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title" style="font-size: x-large">{{ __("messages.farmers") }}</h3>
+                        <h3 class="card-title" style="font-size: x-large">Sug'urtalar</h3>
                     </div>
                     <div class="card-body">
                         <div class="d-flex mb-3">
                             <div>
-                                <a href="{{ route('farmers.create') }}" class="btn btn-success">
-                                    <i class="fa fa-plus"></i> {{ __("messages.add") }}
+                                <a href="{{ route('services.create') }}" class="btn btn-success">
+                                    <i class="fa fa-plus"></i> Qo'shish
                                 </a>
                             </div>
                         </div>
@@ -20,31 +19,29 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Номи</th>
-                                    <th>ИНН</th>
-                                    <th>хр</th>
-                                    <th>Банк коди</th>
-                                    <th>Рахбари</th>
-                                    <th>Амаллар</th>
+                                    <th>Nomi</th>
+                                    <th>Narxi</th>
+                                    <th>Muddati</th>
+                                    <th>Kerakli ma'lumotlar</th>
+                                    <th>Amallar</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($farmers as $firm)
+                                @foreach($services as $item)
                                     <tr>
                                         <td>{{$loop->index +1}}</td>
-                                        <td>{{$firm->name}}</td>
-                                        <td>{{$firm->inn}}</td>
-                                        <td>{{$firm->bank_account}}</td>
-                                        <td>{{$firm->bank_code}}</td>
-                                        <td>{{$firm->leader}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td>{{$item->price}} so'm</td>
+                                        <td>{{$item->deadline}} kun</td>
+                                        <td>{{$item->details_list}}</td>
                                         <td class="d-flex">
 
-                                            <a href="{{ route('farmers.edit', $firm->id) }}" class="btn btn-warning">
+                                            <a href="{{ route('services.edit', $item->id) }}" class="btn btn-warning">
                                                 <i class="fa fa-pen"></i>
                                             </a>
 
 
-                                            <form action="{{route('farmers.destroy', $firm->id)}}" method="post">
+                                            <form action="{{route('services.destroy', $item->id)}}" method="post">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger show_confirm"><i

@@ -123,12 +123,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         var name = $(this).data("name");
         event.preventDefault();
         swal({
-            title: `{{ __('messages.delete_confirmation') }}`,
-            text: "{{ __('messages.delete_confirmation_text') }}",
+            title: "O'chirishni xohlaysizmi?",
+            text: "Agar o'chirsangiz ma'lumotlarni tiklab bo'lmaydi",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-            buttons: ['{{ __('messages.no') }}', "{{ __('messages.yes') }}"]
+            buttons: ["yo'q", "ha"]
         }).then((willDelete) => {
             if (willDelete) {
                 form.submit();
