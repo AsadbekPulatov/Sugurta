@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class UserService extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'service_id',
+        'details',
+    ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function service(){
+        return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
 }

@@ -38,6 +38,7 @@
                         <p>Profile</p>
                     </a>
                 </li>
+                @if(auth()->id() == 1)
                 <li class="nav-item">
                     <a href="{{ route('services.index') }}"
                        class="nav-link @if(request()->routeIs('services.index')) active @endif ">
@@ -45,7 +46,8 @@
                         <p>Sug'urtalar</p>
                     </a>
                 </li>
-
+                @endif
+                @if(auth()->id() != 1)
                 <li class="nav-item">
                     <a href="{{ route('user_services.index') }}"
                        class="nav-link @if(request()->routeIs('user_services.index')) active @endif ">
@@ -53,6 +55,7 @@
                         <p>Sug'urta tuzish</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="post">
