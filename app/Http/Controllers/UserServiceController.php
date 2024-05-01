@@ -9,8 +9,37 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UserServiceController extends Controller
+class UserServiceController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware('user', ['index', 'create', 'store']),
+            new Middleware('admin', ['user_service_status', 'list_user_service_all']),
+        ];
+    }
+
+//   index for admin
+    public function list_user_service_all(Request $request)
+    {
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        if (isset($from_date)) {
+            $user_services = UserService::whereBetween('created_at', [$from_date, $to_date])->get();
+        } else
+            $user_services = UserService::orderby('created_at', 'DESC')->get();
+        return view('admin.user_services.admin', compact('user_services'));
+    }
+
+    public function user_service_status($id)
+    {
+        $user_service = UserService::findorfail($id);
+        $user_service->status = 1;
+        $user_service->save();
+
+        return redirect()->route('list_user_service_all')->with('success', 'Tasdiqlandi');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,10 +47,10 @@ class UserServiceController extends Controller
     {
         $from_date = $request->from_date;
         $to_date = $request->to_date;
-        if (isset($from_date)){
+        if (isset($from_date)) {
             $user_services = UserService::where('user_id', auth()->id())->whereBetween('created_at', [$from_date, $to_date])->get();
         } else
-        $user_services = UserService::where('user_id', auth()->id())->get();
+            $user_services = UserService::where('user_id', auth()->id())->get();
         return view('admin.user_services.index', compact('user_services'));
     }
 
@@ -43,7 +72,7 @@ class UserServiceController extends Controller
         $data['user_id'] = auth()->id();
         $data['details'] = json_encode($data['details']);
         UserService::create($data);
-        return redirect()->route('user_services.index')->with('success',"Sug'urta tuzildi");
+        return redirect()->route('user_services.index')->with('success', "Sug'urta tuzildi");
     }
 
     /**
@@ -51,7 +80,9 @@ class UserServiceController extends Controller
      */
     public function show(UserService $userService)
     {
-        //
+        if ($userService->user_id != auth()->id() && auth()->id() != 1)
+            abort(404);
+        return view('admin.user_services.show', compact('userService'));
     }
 
     /**
@@ -75,7 +106,16 @@ class UserServiceController extends Controller
      */
     public function destroy(UserService $userService)
     {
-        $userService->delete();
-        return redirect()->route('user_services.index')->with('success',"Sug'urta tugatildi.");
+        if (auth()->id() == 1){
+            $userService->delete();
+            return redirect()->route('list_user_service_all')->with('success', "Sug'urta bekor qilindi.");
+        }
+        else {
+            if ($userService->status == 0)
+                $userService->delete();
+            else
+                return redirect()->route('user_services.index')->with('error', "Sug'urtani bekor qila olmaysiz!");
+        }
+        return redirect()->route('user_services.index')->with('success', "Sug'urta bekor qilindi.");
     }
 }

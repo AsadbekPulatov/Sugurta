@@ -15,7 +15,8 @@
                 <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('dashboard') }}" class="d-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
+                <a href="{{ route('dashboard') }}"
+                   class="d-block">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -39,22 +40,29 @@
                     </a>
                 </li>
                 @if(auth()->id() == 1)
-                <li class="nav-item">
-                    <a href="{{ route('services.index') }}"
-                       class="nav-link @if(request()->routeIs('services.index')) active @endif ">
-                        <i class="fa fa-users nav-icon"></i>
-                        <p>Sug'urtalar</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('services.index') }}"
+                           class="nav-link @if(request()->routeIs('services.index')) active @endif ">
+                            <i class="fa fa-users nav-icon"></i>
+                            <p>Sug'urtalar</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('list_user_service_all') }}"
+                           class="nav-link @if(request()->routeIs('list_user_service_all')) active @endif ">
+                            <i class="fa fa-users nav-icon"></i>
+                            <p>Tuzilgan sug'urtalar</p>
+                        </a>
+                    </li>
                 @endif
                 @if(auth()->id() != 1)
-                <li class="nav-item">
-                    <a href="{{ route('user_services.index') }}"
-                       class="nav-link @if(request()->routeIs('user_services.index')) active @endif ">
-                        <i class="fa fa-users nav-icon"></i>
-                        <p>Sug'urta tuzish</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('user_services.index') }}"
+                           class="nav-link @if(request()->routeIs('user_services.index')) active @endif ">
+                            <i class="fa fa-users nav-icon"></i>
+                            <p>Sug'urta tuzish</p>
+                        </a>
+                    </li>
                 @endif
 
                 <li class="nav-item">

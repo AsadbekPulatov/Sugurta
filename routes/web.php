@@ -19,7 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('services', ServiceController::class)->middleware('admin');
-    Route::resource('user_services', UserServiceController::class)->middleware('user');
+    Route::resource('user_services', UserServiceController::class);
+    Route::get('list_user_service_all', [UserServiceController::class, 'list_user_service_all'])->name('list_user_service_all');
+    Route::get('user_service_status/{id}', [UserServiceController::class, 'user_service_status'])->name('user_service_status');
 });
 
 require __DIR__.'/auth.php';

@@ -110,6 +110,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     toastr.success("{{$message}}");
     @endif
 
+
+    @if ($message = Session::get('error'))
+    toastr.error("{{$message}}");
+    @endif
+
     let errors = @json($errors->all());
     @if($errors->any())
     let msg = '';

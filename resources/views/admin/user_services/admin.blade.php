@@ -4,7 +4,7 @@
         <div class="col">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title" style="font-size: x-large">Mening sug'urtalarim</h3>
+                    <h3 class="card-title" style="font-size: x-large">Tuzilgan sug'urtalar</h3>
                 </div>
                 <div class="modal fade" id="modal-create">
                     <div class="modal-dialog">
@@ -16,7 +16,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="get" action="{{ route('user_services.index') }}" id="form">
+                                <form method="get" action="{{ route('list_user_service_all') }}" id="form">
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
@@ -47,11 +47,6 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3">
-                        <div>
-                            <a href="{{ route('user_services.create') }}" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Sug'urta tuzish
-                            </a>
-                        </div>
                         <button type="button" class="ml-3 btn btn-info" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-filter"></i> Filter
                         </button>
@@ -102,6 +97,11 @@
                                             Ma'lumotlarni ko'rish
                                         </a>
 
+                                        @if ($firm->status == 0)
+                                            <a href="{{ route('user_service_status', $firm->id) }}" class="btn btn-warning">
+                                                Tasdiqlash
+                                            </a>
+                                        @endif
 
                                         <form action="{{route('user_services.destroy', $firm->id)}}" method="post">
                                             @method('DELETE')
