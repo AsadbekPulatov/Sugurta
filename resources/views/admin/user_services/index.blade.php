@@ -6,6 +6,7 @@
                 <div class="card-header">
                     <h3 class="card-title" style="font-size: x-large">Mening sug'urtalarim</h3>
                 </div>
+
                 <div class="modal fade" id="modal-create">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -45,6 +46,43 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
+
+                <div class="modal fade" id="restore-service">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Sug'urtani qayta tiklash</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{{ route('restore.service') }}" id="form" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="card-body">
+                                        <input type="hidden" name="user_service_id" id="user_service_id">
+                                        <div class="form-group">
+                                            <label for="image">Talofat yetgan rasm yuklang:</label>
+                                            <input type="file" name="image" class="form-control" id="image"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Bekor
+                                            qilish
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         <div>
@@ -89,6 +127,9 @@
                                         {{ $deadline }}
                                     </td>
                                     <td>
+                                        @if ($firm->status == "2")
+                                            Qoplab beriladi.
+                                        @endif
                                         @if ($firm->status == 1)
                                             Tasdiqlandi.
                                         @endif
@@ -97,6 +138,10 @@
                                         @endif
                                     </td>
                                     <td class="d-flex justify-content-center">
+
+                                        <button type="button" onclick="restore({{ $firm->id }})" class="ml-3 btn btn-warning" data-toggle="modal" data-target="#restore-service">
+                                            Qayta tiklash
+                                        </button>
 
                                         <a href="{{ route('user_services.show', $firm->id) }}" class="btn btn-info">
                                             Ma'lumotlarni ko'rish
@@ -122,4 +167,11 @@
         </div>
         <!-- /.col-md-6 -->
     </div>
+@endsection
+@section('custom-scripts')
+    <script>
+        function restore(id){
+            $("#user_service_id").val(id);
+        }
+    </script>
 @endsection

@@ -54,6 +54,13 @@
                             <p>Tuzilgan sug'urtalar</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('list_restore_service_all') }}"
+                           class="nav-link @if(request()->routeIs('list_restore_service_all')) active @endif ">
+                            <i class="fa fa-users nav-icon"></i>
+                            <p>Sug'urta qoplab berish</p>
+                        </a>
+                    </li>
                 @endif
                 @if(auth()->id() != 1)
                     <li class="nav-item">

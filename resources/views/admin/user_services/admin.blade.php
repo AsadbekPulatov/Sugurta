@@ -84,6 +84,9 @@
                                         {{ $deadline }}
                                     </td>
                                     <td>
+                                        @if ($firm->status == "2")
+                                            Qoplab beriladi.
+                                        @endif
                                         @if ($firm->status == 1)
                                             Tasdiqlandi.
                                         @endif
